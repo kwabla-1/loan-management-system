@@ -1,0 +1,116 @@
+DISPLAY ALL BORROWERS
+if ($allBorrowers) {
+    foreach ($allBorrowers as $key => $value) {
+        $borrowerID = $value['b_id'];
+        echo "<tr class='customer__table-body-row'>";
+            echo "<td>{$value['b_fullname']}</td>";
+            echo "<td>{$value['b_businesstype']}</td>";
+            echo "<td>{$value['b_businessLocation']}</td>";
+            echo "<td>{$value['b_contact']}</td>";
+            echo "<td>{$value['disbursmentMode']}</td>";
+            echo "<td>{$value['amountRequested']}</td>";
+            // echo "
+            //         <input type='hidden' name='borrowerID' value='$borrowerID'>
+            //     ";
+            echo "
+            <td data-label='status'>
+                <a href='app.php?borrowerID=$borrowerID' class='status danger link_clear'>Reject</a>
+                <a href='#' class='status ontime link_clear recommendButtom' id='$borrowerID'>Recommend</a>
+            </td>
+            ";
+
+        echo "</tr>"; 
+    }
+}else {
+    echo "<h1>No Borrowers for now</h1>";
+}
+
+
+TABLE LOADING TEMPLATE
+
+<template id="table-template">
+    <div class="skeletontable">
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+        </div>
+</template>
+
+
+function loadAllBorrowers() {
+    let ajaxRequest = new XMLHttpRequest(); 
+    const method = "GET";
+    const url = "../requests/borrowerRequest.php";
+    const async = true;
+
+    ajaxRequest.open(method,url,async);
+    
+    if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+
+    }
+    ajaxRequest.onload = () => {
+        try {
+            const responesData = JSON.parse(ajaxRequest.responseText);
+            if (responseData) {
+                populateBorrowerTable(responesData);    
+            }else{
+                alert("sorry couldn't get the response data");
+            }
+            
+        } catch (e) {
+            console.log(e); 
+        }
+    }
+    ajaxRequest.send();
+}
+
+
+
+
+DIPLAY INFOR ON DISBURSEMENT SELECT
+<!-- <input type="number" placeholder="mobile money number" class="borrower_data" id="momoNumber" name="momoNumber">  -->
+
+<!-- <input type="text" placeholder="Account holder name" class="borrower_data" id="accountName" name="accountName">
+<input type="number" placeholder="Account number" class="borrower_data" id="accountNUmber" name="accountNumber"> -->
+
+
+-------- INSERTING THE USER INTO THE ACCOUNT TABLE AND DELETING IT FROMR THE BORROWER TABLE; -----
+$sql_account = "INSERT INTO account (loanAmount,laonInterest,laonReceivedOn,pendingBalance,nextPayment,completePayment,cleintID_fk) VALUES (:loanamount,:loanInterest,:receivedon,:pendingBalance,:nextpayment,:completepaymet,:clientID)";
+            $query_account = $con->prepare($sql_account);
+            $datemoneyreceived = date("Y/m/d");
+            $query_account->bindParam(':loanamount',$loanAmount);
+            $query_account->bindParam(':loanInterest',$pencentageInterest);
+            $query_account->bindParam(':receivedon',$datemoneyreceived);
+            $query_account->bindParam(':pendingBalance',$pendingLoan);
+            $query_account->bindParam(':nextpayment',$next_payment);
+            $query_account->bindParam(':completepaymet',$duc);
+            $query_account->bindParam(':clientID',$clietnID);
+            
+            $query_account->execute();
+
+            $lastInsertId = $con->lastInsertId();
+            try {
+               
+                
+                if ($lastInsertId > 0) {
+                    // DELETE BORROWER FROM THE DATABASE;
+                    $sql = "DELETE borrower, fieldassements FROM borrower JOIN fieldassements ON borrower.b_id = fieldassements.borrowerID
+                            WHERE borrower.b_id = $clietnID";
+                    $query = $con->prepare($sql);
+                    $query->execute();
+                    if($query -> rowCount() > 0){
+                        return true;
+                    }else {
+                        return false;
+                    }
+                }else {
+                    return "INSERTIONINTOACCOUNTFAILED";
+                }
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+-------- INSERTING THE USER INTO THE ACCOUNT TABLE AND DELETING IT FROMR THE BORROWER TABLE; ----->>>>>>>>> END

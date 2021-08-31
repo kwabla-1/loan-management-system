@@ -1,0 +1,47 @@
+if client is to complete payment today;
+add client into the chronic table;
+
+STEPS
+*Check today's date to clients completion date;
+*if the two date matches;
+    check to see if the user pending baland is 0;
+        if its 0
+            then the user is done with his or her paymen;
+        if it is not 0;
+            then add user to the chronic
+
+
+
+THE REPAYMETN SECTION
+check all clients nexppayment to see if it matches today;
+    if a cleint next payments matchess;
+        display the nessarry information about the cleint
+    else
+        display no data record;
+
+
+
+
+
+SELECT clients.fullname, clients.telephone, account.loanAmount, account.pendingBalance FROM clients 
+INNER JOIN account ON account.cleintID_fk = clients.client_id 
+INNER JOIN chronic ON chronic.clientID_fk = clients.client_id AND account.cleintID_fk = chronic.clientID_fk
+
+
+=================== THE REGISTRATION SECTION ==========================================
+Before a user is added to the customers section 
+1. the user must be added to the borrower database;
+2. the borrowers are then showned at the assement section 
+3.upon clicking on the reject, the user deleted from the borrower table;
+4.if user clicks on the recommend section, add user clients, gurantor and but stutus to unapproved;
+5.if admin approve a loan change status to approve, and update the recommend amount,
+
+
+total chronic dashboard;
+call centre -- add borrower, customers, repayment
+field officer -- assessment,repayment.customers(no entry)
+manager-- approval,repayment,customers,(no entry)
+only call centre should do entry
+admin is the only one supposed to disburse
+delete buttom on approval
+spelling: approval, role , confirm transaction
