@@ -38,10 +38,20 @@ Before a user is added to the customers section
 
 
 total chronic dashboard;
-call centre -- add borrower, customers, repayment
+call centre -- add borrower, customers, repayment;
+if an employee is from the callcenter departement, 
+    priviledges are add,borrower,customers repayment;
+process;
+create a callid ex = callcenteID
+
 field officer -- assessment,repayment.customers(no entry)
 manager-- approval,repayment,customers,(no entry)
 only call centre should do entry
 admin is the only one supposed to disburse
 delete buttom on approval
 spelling: approval, role , confirm transaction
+
+callcenter;
+loanofficer
+managers
+financial;

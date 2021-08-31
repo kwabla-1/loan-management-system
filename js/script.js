@@ -19,6 +19,7 @@ const borrowerTable = document.getElementById("borrowerTable").getElementsByTagN
 const accessmentTable = document.getElementById("accessmentTable").getElementsByTagName('tbody')[0];
 const disbursementTable = document.getElementById("disbursementTable").getElementsByTagName('tbody')[0];
 const customerTable = document.getElementById("allCustomerTable").getElementsByTagName('tbody')[0];
+const chronicTable = document.getElementById("chronicTable").getElementsByTagName('tbody')[0];
 
 // ============================  DISPLAY INPUT FIELD ==================================
 function showInputField(nameSelect) {
@@ -474,6 +475,25 @@ function deleteApprovedCLient(clientId) {
     ajaxRequest.send();
 }
 
+function deleteChronicUser(chronicID) {
+    let ajaxRequest = new XMLHttpRequest(); 
+    const method = "GET";
+    const url = `../requests/chronicRequest.php?deleteChronicUSer=${chronicID}`;
+    ajaxRequest.open(method,url);
+    ajaxRequest.onload = () =>{
+        try {
+            const deleteSucces = ajaxRequest.responseText;
+            if (deleteSucces == "DELETESUCCESS") {
+                console.log(deleteSucces);
+                getChronicCLients();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    ajaxRequest.send();
+}
+
 function getAllApprovedCLients() {
     let ajaxRequest = new XMLHttpRequest(); 
     const method = "GET";
@@ -548,7 +568,6 @@ function getAllRegisteredClient() {
                     customerTable.innerHTML = "<h1>sorry no client found</h1>";
                 }else{
                     const responesData = JSON.parse(ajaxRequest.responseText);
-                    console.log(ajaxRequest.responseText);
                     populateRegisteredClients(responesData)
                 }
             }
@@ -674,6 +693,61 @@ function confirmPayment(cliendID,approvedamout) {
 
     ajaxRequest.send();
 }
+
+function getChronicCLients() {
+    let ajaxRequest = new XMLHttpRequest(); 
+    const method = "GET";
+    const url = "../requests/chronicRequest.php?getChronicClients";
+    ajaxRequest.open(method,url);
+
+    ajaxRequest.onreadystatechange = function () {
+        if ( ajaxRequest.status == 200) {
+            if (this.readyState == 4) {
+                if (ajaxRequest.responseText == false) {
+                    chronicTable.innerHTML= "SORRY NO CHRONIC CLIENTS FOR NOW CHECK BACK LATER"
+                }else{
+                    const responesData = JSON.parse(ajaxRequest.responseText);
+                    populateChronicTable(responesData);
+                
+                }
+            }
+        }
+    }
+
+    ajaxRequest.send();
+}
+
+
+function populateChronicTable(data) {
+    if (chronicTable.firstChild) {
+        while (chronicTable.firstChild) {
+            chronicTable.removeChild(chronicTable.firstChild);
+        } 
+    }
+
+    data.forEach(clientdata => {
+        let tableData = `<tr class='customer__table-body-row'>
+            <td><img src='../img/img_avatar2.png' alt='User image' style='width: 30px; border-radius: 100px;'></td>
+            <td>${clientdata.fullname}</td>
+            <td>GH&#162;${clientdata.loanAmount}</td>
+            <td>GH&#162;${clientdata.pendingBalance}</td>
+            <td>${clientdata.telephone}</td>
+            <td>${clientdata.completePayment}</td>
+            <td><span class='defaulted'>Chronic</span></td>
+            
+            
+            <td data-label='status'>
+                <span class='status danger'><a href='#' class='link_clear' onclick="deleteChronicUser(${clientdata.client_id}); return false;">Delete</a></span>
+                <span class='status ontime'><a href='#' class='link_clear'>Details</a></span>
+            </td>
+        </tr>
+        `;
+        let newRow = chronicTable.insertRow(chronicTable.rows.length);
+        newRow.innerHTML = tableData;
+    });
+
+}
+
 
 // ============================ END ASYNC FUNCTION ==================================
 // ACTIVATING THE RECOMMEND MODAL WHEN THE RECOMMEND BUTTON IS PRESSED;

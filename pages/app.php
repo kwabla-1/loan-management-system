@@ -352,6 +352,7 @@
                                     <div class="table-content">
                                         <table cellpadding="0" cellspacing="0" border="0" class="assessmentTable" id="allCustomerTable">
                                             <tbody>
+                                                <!-- table content wil be loaded by javascript -->
                                             <?php 
                                             // if ($allCLients) {
                                             //     foreach ($allCLients as $key => $value) {
@@ -481,50 +482,52 @@
                                     </div>
 
                                     <div class="table-content">
-                                        <table cellpadding="0" cellspacing="0" border="0" class="assessmentTable">
+                                        <table cellpadding="0" cellspacing="0" border="0" class="assessmentTable" id="chronicTable">
                                             <tbody>
+                                                <!-- CONTENT WILL BE LOADED BY JAVASCRIPT -->
                                             <?php 
-                                                if (isset($_GET['chronicID'])) {
-                                                    $clientChronicID = $_GET['chronicID'];
-                                                    echo "chronic id is set" . $clientChronicID;
-                                                    $deleteResult = deleterFromChronic($con,$clientChronicID);
-                                                    if ($deleteResult) {
-                                                        header("location app.php?test");
-                                                    }else {
-                                                        echo "chronic deletion gone wrong";
-                                                    }
-                                                }
+                                                // if (isset($_GET['chronicID'])) {
+                                                //     $clientChronicID = $_GET['chronicID'];
+                                                    
+                                                //     $deleteResult = deleterFromChronic($con,$clientChronicID);
+                                                //     if ($deleteResult) {
+                                                //         header("location app.php");
+                                                //     }else {
+                                                //         echo "chronic deletion gone wrong";
+                                                //     }
+                                                // }
                                                 $chronicResult = getChronicClients($con);
-                                                if ($chronicResult) {
-                                                    //PRINT TABLE
-                                                    foreach ($chronicResult as $key => $value) {
-                                                        $cfullname = $value['fullname'];
-                                                        $cloanamount = $value['loanAmount'];
-                                                        $cpendingBalance = $value['pendingBalance'];
-                                                        $ctelephone = $value['telephone'];
-                                                        $ccompletePayment = $value['completePayment'];
-                                                        $cclientid = $value['client_id'];
+                                                // if ($chronicResult) {
+                                                //     //PRINT TABLE
+                                                //     foreach ($chronicResult as $key => $value) {
+                                                //         $cfullname = $value['fullname'];
+                                                //         $cloanamount = $value['loanAmount'];
+                                                //         $cpendingBalance = $value['pendingBalance'];
+                                                //         $ctelephone = $value['telephone'];
+                                                //         $ccompletePayment = $value['completePayment'];
+                                                //         $cclientid = $value['client_id'];
 
-                                                        echo "<tr class='customer__table-body-row' onclick=\"window.location='./clients/profile.html?c_id={$cclientid}';\" >";
-                                                            echo "<td><img src='../img/img_avatar2.png' alt='User image' style='width: 30px; border-radius: 100px;'></td>";
-                                                            echo "<td>{$cfullname}</td>";
-                                                            echo "<td>GH&#162;{$cloanamount}</td>";
-                                                            echo "<td>GH&#162;{$cpendingBalance}</td>";
-                                                            echo "<td>{$ctelephone}</td>";
-                                                            echo "<td>{$ccompletePayment}</td>";
-                                                            echo "<td><span class='defaulted'>Chronic</span></td>";
-                                                            echo "
-                                                                <td data-label='status'>
-                                                                    <span class='status danger'><a href='app.php?chronicID=$cclientid' class='link_clear'>Delete</a></span>
-                                                                </td>
-                                                            ";                                        
-                                                        echo "</tr>";
-                                                        // print_r($value);
-                                                    }
-                                                    // var_dump($chronicResult);
-                                                }else {
-                                                    echo "<h1>Sorry No Chronic Client found</h1>";
-                                                }
+                                                //         echo "<tr class='customer__table-body-row' >";
+                                                //             echo "<td><img src='../img/img_avatar2.png' alt='User image' style='width: 30px; border-radius: 100px;'></td>";
+                                                //             echo "<td>{$cfullname}</td>";
+                                                //             echo "<td>GH&#162;{$cloanamount}</td>";
+                                                //             echo "<td>GH&#162;{$cpendingBalance}</td>";
+                                                //             echo "<td>{$ctelephone}</td>";
+                                                //             echo "<td>{$ccompletePayment}</td>";
+                                                //             echo "<td><span class='defaulted'>Chronic</span></td>";
+                                                //             echo "
+                                                //                 <td data-label='status'>
+                                                //                     <span class='status danger'><a href='app.php?chronicID=$cclientid' class='link_clear'>Delete</a></span>
+                                                //                     <span class='status ontime'><a href='app.php?chronicClientID=$cclientid' class='link_clear'>Details</a></span>
+                                                //                 </td>
+                                                //             ";                                        
+                                                //         echo "</tr>";
+                                                //         // print_r($value);
+                                                //     }
+                                                //     // var_dump($chronicResult);
+                                                // }else {
+                                                //     echo "<h1>Sorry No Chronic Client found</h1>";
+                                                // }
                                             ?>
                                             </tbody>
                                         </table>
@@ -590,7 +593,7 @@
                                                         echo "
                                                             <td data-label='status'>
                                                                 <span class='status danger'><a href='#' class='link_clear'>Delete</a></span>
-                                                                <span class='status update'><a href='./clients/profile.html?c_id={$clientid}' class='link_clear'>Update</a></span>
+                                                                <span class='status update'><a href='./clients/profile.html?c_id=' class='link_clear'>Update</a></span>
                                                             </td>
                                                         ";
                                                     echo "</tr>"; 
@@ -648,11 +651,13 @@
  
                                     <div class="right__container">
                                         <select name="priviledge" class="privilegde" required>
-                                            <option value="">Select Privilegdes</option>
-                                            <option value="Admin">Admin</option>
-                                            <option value="Read">Read</option>
+                                            <option value="">Select Departments</option>
+                                            <option value="callCenter">Call Center</option>
+                                            <option value="loanOfficer">Loan Officers</option>
+                                            <option value="managers">Managers</option>
+                                            <option value="finance">Finance</option>
                                         </select>
-                                         <input type="text" placeholder="role" name="emp_role" required>
+                                         <input type="text" placeholder="Employee ID" name="emp_role" required>
                                          <input type="text" placeholder="Username is auto generated" disabled name="emp_username"  required>
                                          <input type="password" name="emp_confirmpassword" placeholder="Confirmpassword" required>
                                      </div>
@@ -1081,6 +1086,7 @@
             getAllApprovedCLients();
             getAllDisbursementList();
             getAllRegisteredClient();
+            getChronicCLients();
         });
 
     </script>
