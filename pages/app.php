@@ -223,6 +223,14 @@
             </nav>
             
             <main class="main__content">
+                <div id="formErrorContainer">
+                    <span id="formMessage">                  
+                    </span>
+                </div>
+                <div id="formSuccessContainer">
+                    <span id="formMessageSuccess">                  
+                    </span>
+                </div>
                 <div class="tab__centent">
                     <div class="tab__content-item active" id="dashboard">
                         <div class="dashboard__container fadIn">
@@ -549,82 +557,34 @@
                                     <a href="#" class="btn btn--primary" onclick="openRegTab(event,'register_emp')">+ Add Employee</a>
                                     
                                 </div>
+                                
+                                <div class="custom-table">
+                                    <div class="table-header1">
+                                        <table cellpadding="0" cellspacing="0" border="0" class="assessmentTable-head">
+                                            <thead>
+                                            <tr>
+                                                <th>Image</th>
+                                                <th>Name</th>
+                                                <th>Number</th>
+                                                <th>Location</th>
+                                                <th>Department</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
 
-                                <table class="table">
-                                    
-                                    <thead>
-                                        <tr>
-                                            <th>Image</th>
-                                            <th>Name</th>
-                                            <th>Number</th>
-                                            <th>Roll</th>
-                                            <th>Privilegdes</th>
-                                            <th>Permission</th>
-                                            <th>Action</th>
-                                           
-                                        </tr>
-                                    </thead>
-                                 
-                                    <tbody>
-                                        <?php
-                                            if ($allemployees) {
-                                                //DISPLAYING ALL EMPLOYEES
-                                                foreach ($allemployees as $key => $value) {
-                                                    $efullname = $value['firstname']. " ". $value['lastname'];
-                                                    $enumber = $value['number'];
-                                                    $eroll = $value['role'];
-                                                    $erights = $value['privileges'];
-                                                    
-                                                    echo "<tr class='customer__table-body-row'>";
-                                                        echo "<td><img src='../img/img_avatar2.png' alt='User image' style='width: 30px; border-radius: 100px;'></td>";
-                                                        echo "<td>{$efullname}</td>";
-                                                        echo "<td>{$enumber}</td>";
-                                                        echo "<td>{$eroll}</td>";
-                                                        echo "<td><span class='ref'>{$erights}</span></td>";
+                                    <div class="table-content">
+                                        <table cellpadding="0" cellspacing="0" border="0" class="assessmentTable" id="employeeTable">
+                                            <tbody>
+                                                <!-- content will be automatically be loaded by javascript -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
 
-                                                        echo "
-                                                            <td data-label='number'>
-                                                                <select name='permission' id=''>
-                                                                    <option value='Read'>Read</option>
-                                                                    <option value='Create'>Create</option>
-                                                                    <option value='Admin_privilages'>Admin Privilages</option>
-                                                                </select>
-                                                            </td>";
-                                                        echo "
-                                                            <td data-label='status'>
-                                                                <span class='status danger'><a href='#' class='link_clear'>Delete</a></span>
-                                                                <span class='status update'><a href='./clients/profile.html?c_id=' class='link_clear'>Update</a></span>
-                                                            </td>
-                                                        ";
-                                                    echo "</tr>"; 
-                                                }
-                                            }else {
-                                                // DISPLAY NO INFORMATION
-                                                echo "<h1>Sorry no Employee Added</h1>";
-                                            }         
-                                        ?>
-                                        <!-- <tr>
-                                            <td data-label="name">Martin Ahedor</td>
-                                            <td data-label="loan amount">0542186981</td>
-                                            <td data-label="loan amount">Bouncer</td>
-                                            <td data-label="balance">Read</td>
-                                            <td data-label="number">
-                                                <select name='permission' id=''>
-                                                    <option value='Read'>Read</option>
-                                                    <option value='Create'>Create</option>
-                                                    <option value='Admin_privilages'>Admin Privilages</option>
-                                                </select>
-                                            </td>
-                                            
-                                            <td data-label="status">
-                                                <span class="status danger">Delete</span>
-                                                <span class="status ontime">Update</span>
-                                            </td>
-                                            
-                                        </tr> -->
 
-                                    </tbody>
-                                </table>
+
                             </div>
                         </div>
                     </div>
@@ -640,30 +600,30 @@
 
                            <div class="form__container">
                                <h3 class="error_alert">Error: passwords do not match </h3>
-                               <form action="../handlers/employeeHandler.php" method="post" class="reg__form">
+                               <form action="" method="" class="reg__form" id="employeeForm">
                                   <div class="divider">
                                     <div class="left__container">
-                                        <input type="text" placeholder="Full name" name="emp_fullname" required>
-                                        <input type="text" placeholder="Location" name="emp_location" required>
-                                        <input type="text" placeholder="number" name="emp_tel" required>
-                                        <input type="password" name="emp_password" id="" placeholder="Enter password" required>
+                                        <input type="text" placeholder="Full name" name="emp_fullname" class="employeeFormData" required>
+                                        <input type="text" placeholder="Location" name="emp_location" class="employeeFormData" required>
+                                        <input type="number" placeholder="Tel number" name="emp_tel" class="employeeFormData" required>
+                                        <input type="password" name="emp_password" id="" placeholder="Enter password" class="employeeFormData" required>
                                     </div>
  
                                     <div class="right__container">
-                                        <select name="priviledge" class="privilegde" required>
+                                        <select name="departments" class="privilegde employeeFormData" required>
                                             <option value="">Select Departments</option>
                                             <option value="callCenter">Call Center</option>
                                             <option value="loanOfficer">Loan Officers</option>
                                             <option value="managers">Managers</option>
                                             <option value="finance">Finance</option>
                                         </select>
-                                         <input type="text" placeholder="Employee ID" name="emp_role" required>
+                                         <input type="text" placeholder="employee id is auto generated" name="emp_id" disabled required>
                                          <input type="text" placeholder="Username is auto generated" disabled name="emp_username"  required>
-                                         <input type="password" name="emp_confirmpassword" placeholder="Confirmpassword" required>
+                                         <input type="password" name="emp_confirmpassword" placeholder="Confirmpassword" class="employeeFormData" required>
                                      </div>
                                   </div>
 
-                                <button type="submit" class="btn btn--primary mag-1" name="register_employee">Add</button>
+                                <button type="submit" class="btn btn--primary mag-1" name="register_employee" id="addAnEmployee" onclick="submitEmployeeForm(); return false">Add</button>
                                </form>
                            </div>
                         </div>
@@ -680,8 +640,62 @@
                                     <a href="./pages/Print/repayment.html" class="btn btn--primary" target="_blank">+ Print Table</a>
                                     
                                 </div>
+                                
+                                <div class="custom-table">
+                                    <div class="table-header1">
+                                        <table cellpadding="0" cellspacing="0" border="0" class="assessmentTable-head">
+                                            <thead>
+                                            <tr>
+                                                <th>Fullname</th>
+                                                <th>Number</th>
+                                                <th>Location</th>
+                                                <th>Amount</th>
+                                                <th>Loan Amount</th>
+                                                <th>Pending Balance</th>
+                                                
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
 
-                                <table class="table">
+                                    <div class="table-content">
+                                    <table cellpadding="0" cellspacing="0" border="0" class="assessmentTable" id="repaymenttable">
+                                        <tbody>
+                                            <!-- CONTENT WILL BE LOADED BY javascript -->
+                                        <?php 
+                                            $allNextRepayment = $accountObject->getallNextPaymentClientsInfor($con);
+                                            foreach ($allNextRepayment as $dataname => $value) {
+                                                if ($value['nextPayment'] == '2021-09-07') {
+                                                    // calculate the weekly payment
+                                                    $weekleyPayment = $value['pendingBalance'] / 16;
+
+                                                    echo "<tr>
+                                                        <td data-label='name'>{$value['fullname']}</td>
+                                                        <td data-label='loan amount'>{$value['telephone']}</td>
+                                                        <td data-label='loan amount'>{$value['location']}</td>
+                                                        <td data-label='balance'>gh{$weekleyPayment}</td>
+                                                        <td data-label='balance'>gh{$value['loanAmount']}.00</td>
+                                                        <td data-label='balance'>gh{$value['pendingBalance']}.00</td>
+                                                        
+                                                    </tr>
+                                                    ";
+                                                    // print_r($value['fullname']);
+                                                }
+                                                // echo"<br>";
+                                                // print_r($value['nextPayment']);
+                                                // print_r($value);
+                                            }
+                                            // var_dump($allNextRepayment);
+                                        ?>
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+
+
+
+                                <!-- <table class="table">
                                     
                                     <thead>
                                         <tr>
@@ -716,7 +730,7 @@
                                         </tr>
 
                                     </tbody>
-                                </table>
+                                </table> -->
                             </div>
                         </div>
                     </div>
@@ -1087,6 +1101,7 @@
             getAllDisbursementList();
             getAllRegisteredClient();
             getChronicCLients();
+            loadAllEmployees();
         });
 
     </script>

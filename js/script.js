@@ -20,6 +20,7 @@ const accessmentTable = document.getElementById("accessmentTable").getElementsBy
 const disbursementTable = document.getElementById("disbursementTable").getElementsByTagName('tbody')[0];
 const customerTable = document.getElementById("allCustomerTable").getElementsByTagName('tbody')[0];
 const chronicTable = document.getElementById("chronicTable").getElementsByTagName('tbody')[0];
+const employeeTable = document.getElementById("employeeTable").getElementsByTagName('tbody')[0];
 
 // ============================  DISPLAY INPUT FIELD ==================================
 function showInputField(nameSelect) {
@@ -206,6 +207,26 @@ function showError(message) {
     small.innerText = message;
   }
 
+function generalShowError(message) {
+    const errorContainer = document.getElementById("formErrorContainer");
+    const errormessage = document.getElementById("formMessage");
+    errorContainer.style.visibility = "visible";
+    errormessage.innerText = message;
+}
+function generalShowSuccessMessage(message) {
+    const successContainer = document.getElementById("formSuccessContainer");
+    const successMessage = document.getElementById("formMessageSuccess");
+    successContainer.style.visibility = "visible";
+    successMessage.innerText = message;
+
+    setTimeout(() => {
+        // document.getElementById("borrowerFormResponse").innerHTML = "";
+        successContainer.style.visibility = 'hidden';
+        successMessage.innerText = "";
+
+    }, 4000);
+}
+
   function showSuccess(message) {
     const small = document.getElementById("borrowerFormResponse");
     small.style.visibility = "visible;"
@@ -281,6 +302,55 @@ function submitBorrowerForm() {
 }
 
 
+function submitEmployeeForm() {
+
+    let employeeform = document.getElementById('employeeForm');
+    let formElement = document.getElementsByClassName("employeeFormData");
+    let formData = new FormData();
+    
+
+    for (let i = 0; i < formElement.length; i++) {
+        formData.append(formElement[i].name, formElement[i].value);
+        
+        if (formElement[i].value === "") {
+            generalShowError("Please all input must be filled");
+            
+            setTimeout(() => {document.getElementById("formErrorContainer").style.visibility = 'hidden';}, 2000);
+            return;
+        }else if (formElement['emp_password'].value !==formElement['emp_confirmpassword'].value ) {
+            generalShowError("password does not match");
+            
+            setTimeout(() => {document.getElementById("formErrorContainer").style.visibility = 'hidden';}, 2000);
+            return; 
+        }
+        
+    }
+
+    document.getElementById("addAnEmployee").disabled = true;
+
+    let ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.open("POST", '../handlers/employeeHandler.php');
+    ajaxRequest.send(formData);    
+
+    ajaxRequest.onreadystatechange = function () {
+        if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+            document.getElementById("addAnEmployee").disabled = false;
+            employeeform.reset();
+            showSuccess(ajaxRequest.responseText);
+            document.getElementById("borrowerFormResponse").style.visibility = 'visible';
+            // calling all borrwes before the user get there
+            generalShowSuccessMessage("Employee added successfully");
+            loadAllEmployees();
+            openTab('employees');
+            
+            //setting the form response message to nothing;
+           
+        }else if (ajaxRequest.readyState !== 4 && ajaxRequest.status !== 200) {
+            setTimeout(() => {showError(ajaxRequest.responseText); }, 4000);
+        }
+    }
+}
+
 function loadAllBorrowers() {
     let ajaxRequest = new XMLHttpRequest(); 
     const method = "GET";
@@ -302,6 +372,59 @@ function loadAllBorrowers() {
         }
     }
     ajaxRequest.send();
+}
+
+function loadAllEmployees() {
+    let ajaxRequest = new XMLHttpRequest(); 
+    const method = "GET";
+    const url = "../handlers/employeeHandler.php?getAllEmpleyees";
+
+    ajaxRequest.open(method,url);
+    ajaxRequest.onreadystatechange = function () {
+        if ( ajaxRequest.status == 200) {
+            if (this.readyState == 4) {
+                if (ajaxRequest.responseText == "NOEMPLOYEEWASFOUND") {
+                    employeeTable.innerHTML = "<h1>You have no employees</h1>";
+                }else{
+                    const responesData = JSON.parse(ajaxRequest.responseText);
+                    populateEmployeeTable(responesData);
+                    
+                    
+                }
+            } 
+        }
+    }
+    ajaxRequest.send();
+}
+
+function populateEmployeeTable(data) {
+    if (employeeTable.firstChild) {
+        
+        while (employeeTable.firstChild) {
+            employeeTable.removeChild(employeeTable.firstChild);
+        } 
+    }
+
+    data.forEach(employee => {
+        let tableData = `<tr class='customer__table-body-row'>
+            <td><img src='../img/img_avatar2.png' alt='User image' style='width: 30px; border-radius: 100px;'></td>
+            <td>${employee.fullname}</td>
+            <td>${employee.number}</td>
+            <td>${employee.location}</td>
+            <td>${employee.department}</td>
+           
+            <td data-label='status'>
+                <a href='#' class='status ontime link_clear recommendButtom'>View Infor</a>
+            </td>
+        </tr>
+        `;
+
+        let newRow = employeeTable.insertRow(employeeTable.rows.length);
+        // console.log(borrowerTable.firstChild);
+        newRow.innerHTML = tableData;
+        // newCell.appendChild()
+        
+    });
 }
 
 function populateBorrowerTable(jsonData) {
@@ -704,7 +827,7 @@ function getChronicCLients() {
         if ( ajaxRequest.status == 200) {
             if (this.readyState == 4) {
                 if (ajaxRequest.responseText == false) {
-                    chronicTable.innerHTML= "SORRY NO CHRONIC CLIENTS FOR NOW CHECK BACK LATER"
+                    chronicTable.innerHTML= "<h1>SORRY NO CHRONIC CLIENTS FOR NOW CHECK BACK LATER</h1>";
                 }else{
                     const responesData = JSON.parse(ajaxRequest.responseText);
                     populateChronicTable(responesData);

@@ -77,6 +77,21 @@
             return $queryResult;
         }
 
+        public function getallNextPaymentClientsInfor($con)
+        {
+            $sql = "SELECT clients.* ,account.nextPayment,account.loanAmount,account.pendingBalance FROM clients JOIN account ON account.cleintID_fk = clients.client_id";
+            $query = $con->prepare($sql);
+            $query->execute();
+
+            $queryResult = $query->fetchAll(PDO::FETCH_ASSOC);
+            if ($query->rowCount() > 0) {
+                return $queryResult;
+            }else {
+                return false;
+            }
+            
+        }
+
         public function insertIntoAccout($con,$clietnID,$loanAmount)
         {
             $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // setting the pdo to execute error or try catch case;

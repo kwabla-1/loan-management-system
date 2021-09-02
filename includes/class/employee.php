@@ -15,6 +15,11 @@
 
             $queryResult = $query->fetchAll(PDO::FETCH_ASSOC);
             return $queryResult;
+            // if($query->rowCount() > 0){
+                
+            // }else {
+            //     return false;
+            // }
         }
     }
 ?>

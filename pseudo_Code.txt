@@ -51,7 +51,12 @@ admin is the only one supposed to disburse
 delete buttom on approval
 spelling: approval, role , confirm transaction
 
-callcenter;
-loanofficer
+callcenter; == ADD BORROWER, ENTER PAYMENT;
+loanofficer == ASSESSEMTN AND CLIENT DETAILS WITHOUT PAYMENT;
 managers
 financial;
+
+amounttaken * 34% = interest;
+
+amounttaken + interest = total repayment;
+pendingbalance / 16 = weekly payment;

@@ -114,3 +114,81 @@ $sql_account = "INSERT INTO account (loanAmount,laonInterest,laonReceivedOn,pend
                 echo $e->getMessage();
             }
 -------- INSERTING THE USER INTO THE ACCOUNT TABLE AND DELETING IT FROMR THE BORROWER TABLE; ----->>>>>>>>> END
+
+
+
+CODE OF DISPLAYING ALL EMPLOYEES
+                                <!-- ----------------- -->
+                                <!-- <table class="table"> -->
+                                    
+                                    <!-- <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th>Number</th>
+                                            <th>Location</th>
+                                            <th>Deparments</th>
+                                            <th>Action</th>      
+                                        </tr>
+                                    </thead>
+                                  -->
+                                    <!-- <tbody> -->
+                                        <?php
+                                            // if ($allemployees) {
+                                            //     //DISPLAYING ALL EMPLOYEES
+                                            //     // foreach ($allemployees as $key => $value) {
+                                            //     //     $efullname = $value['firstname']. " ". $value['lastname'];
+                                            //     //     $enumber = $value['number'];
+                                            //     //     $eroll = $value['role'];
+                                            //     //     $erights = $value['privileges'];
+                                                    
+                                            //     //     echo "<tr class='customer__table-body-row'>";
+                                            //     //         echo "<td><img src='../img/img_avatar2.png' alt='User image' style='width: 30px; border-radius: 100px;'></td>";
+                                            //     //         echo "<td>{$efullname}</td>";
+                                            //     //         echo "<td>{$enumber}</td>";
+                                            //     //         echo "<td>{$eroll}</td>";
+                                            //     //         echo "<td><span class='ref'>{$erights}</span></td>";
+
+                                            //     //         echo "
+                                            //     //             <td data-label='number'>
+                                            //     //                 <select name='permission' id=''>
+                                            //     //                     <option value='Read'>Read</option>
+                                            //     //                     <option value='Create'>Create</option>
+                                            //     //                     <option value='Admin_privilages'>Admin Privilages</option>
+                                            //     //                 </select>
+                                            //     //             </td>";
+                                            //     //         echo "
+                                            //     //             <td data-label='status'>
+                                            //     //                 <span class='status danger'><a href='#' class='link_clear'>Delete</a></span>
+                                            //     //                 <span class='status update'><a href='./clients/profile.html?c_id=' class='link_clear'>Update</a></span>
+                                            //     //             </td>
+                                            //     //         ";
+                                            //     //     echo "</tr>"; 
+                                            //     // }
+                                            // }else {
+                                            //     // DISPLAY NO INFORMATION
+                                            //     echo "<h1>Sorry no Employee Added</h1>";
+                                            // }         
+                                        ?>
+                                        <!-- <tr>
+                                            <td data-label="name">Martin Ahedor</td>
+                                            <td data-label="loan amount">0542186981</td>
+                                            <td data-label="loan amount">Bouncer</td>
+                                            <td data-label="balance">Read</td>
+                                            <td data-label="number">
+                                                <select name='permission' id=''>
+                                                    <option value='Read'>Read</option>
+                                                    <option value='Create'>Create</option>
+                                                    <option value='Admin_privilages'>Admin Privilages</option>
+                                                </select>
+                                            </td>
+                                            
+                                            <td data-label="status">
+                                                <span class="status danger">Delete</span>
+                                                <span class="status ontime">Update</span>
+                                            </td>
+                                            
+                                        </tr> -->
+
+                                    <!-- </tbody> -->
+                                <!-- </table> -->
