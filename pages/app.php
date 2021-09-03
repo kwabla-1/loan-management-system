@@ -62,9 +62,9 @@
     $allemployees = $employeeObject->getAllEmployee($con);
 
     // =================== CHRONIC SECTION ===================
-    // $today = date('Y-m-d');
-    $today = '2021-12-11';
-    // echo $today;
+    $today = date('Y-m-d');
+    // $today = '2021-12-11';
+    // // echo $today;
 
     foreach ($allCLients as $key => $value) {
         if ($today == $value['completePayment']) {
@@ -110,12 +110,57 @@
                 <span class="p">PRIME<span class="b">BOND</span></span>
             </div>
 
-            <form action="" method="" class="search">
-                <input type="text" class="search__input" placeholder="search client">
-                <button class="search__button">
-                    <span class="lnr lnr-magnifier"></span>
-                </button>
-            </form>
+            <form action="../handlers/search.php" method="POST" class="search">
+                <div class="searchFormELements">
+                    <input type="text" class="search__input" id="searchTextInput" placeholder="search client" name="searchUser" autocomplete="off" oninput="getLiveUserSearch(this.value)">
+                    <button class="search__button">
+                        <span class="lnr lnr-magnifier"></span>
+                    </button>
+                </div>
+                <div class="searchResults">
+                    <a href="#" class="link_clear searchResultLink">
+                        <div class="searchImageResult" style="margin-right: 20px;">
+                            <img src="../img/img_avatar.png" alt="user image" style="border-radius: 100px; width: 30px;">
+                        </div>
+                        <div class="searchTextResult">
+                            <div class="clientInforSeacrch">
+                                <span style="font-weight: bold;font-size: 1.5rem;">Martin Ahedor</span>
+                            </div>
+                            <div class="clientGurantorInforSearch">
+                                <span>0543234234</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="link_clear searchResultLink">
+                        <div class="searchImageResult" style="margin-right: 20px;">
+                            <img src="../img/img_avatar.png" alt="user image" style="border-radius: 100px; width: 30px;">
+                        </div>
+                        <div class="searchTextResult">
+                            <div class="clientInforSeacrch">
+                                <span style="font-weight: bold;font-size: 1.5rem;">Martin Ahedor</span>
+                            </div>
+                            <div class="clientGurantorInforSearch">
+                                <span>0543234234</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="link_clear searchResultLink">
+                        <div class="searchImageResult" style="margin-right: 20px;">
+                            <img src="../img/img_avatar.png" alt="user image" style="border-radius: 100px; width: 30px;">
+                        </div>
+                        <div class="searchTextResult">
+                            <div class="clientInforSeacrch">
+                                <span style="font-weight: bold;font-size: 1.5rem;">Martin Ahedor</span>
+                            </div>
+                            <div class="clientGurantorInforSearch">
+                                <span>0543234234</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </form> 
+           
+           
 
             <div class="user-nav">
                
@@ -661,11 +706,11 @@
                                     <div class="table-content">
                                     <table cellpadding="0" cellspacing="0" border="0" class="assessmentTable" id="repaymenttable">
                                         <tbody>
-                                            <!-- CONTENT WILL BE LOADED BY javascript -->
+                                           
                                         <?php 
                                             $allNextRepayment = $accountObject->getallNextPaymentClientsInfor($con);
                                             foreach ($allNextRepayment as $dataname => $value) {
-                                                if ($value['nextPayment'] == '2021-09-07') {
+                                                if ($value['nextPayment'] == $today) {
                                                     // calculate the weekly payment
                                                     $weekleyPayment = $value['pendingBalance'] / 16;
 
@@ -679,13 +724,9 @@
                                                         
                                                     </tr>
                                                     ";
-                                                    // print_r($value['fullname']);
                                                 }
-                                                // echo"<br>";
-                                                // print_r($value['nextPayment']);
-                                                // print_r($value);
                                             }
-                                            // var_dump($allNextRepayment);
+                                          
                                         ?>
                                         
                                         </tbody>

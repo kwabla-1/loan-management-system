@@ -227,11 +227,11 @@ function generalShowSuccessMessage(message) {
     }, 4000);
 }
 
-  function showSuccess(message) {
+function showSuccess(message) {
     const small = document.getElementById("borrowerFormResponse");
     small.style.visibility = "visible;"
     small.innerText = message;
-  }
+}
 
 
 function submitBorrowerForm() {
@@ -871,6 +871,21 @@ function populateChronicTable(data) {
 
 }
 
+
+function getLiveUserSearch(data) {
+    // console.log(data);
+    fetchSearchData(data);
+}
+
+function fetchSearchData(searchdata) {
+    fetch("../handlers/search.php",{
+        method: "POST",
+        body: new URLSearchParams('searchUser='+searchdata)
+    })
+    .then(res => res.text())
+    .then(res => console.log(res))
+    .catch( e => console.log("Error: "+ e));
+}
 
 // ============================ END ASYNC FUNCTION ==================================
 // ACTIVATING THE RECOMMEND MODAL WHEN THE RECOMMEND BUTTON IS PRESSED;
