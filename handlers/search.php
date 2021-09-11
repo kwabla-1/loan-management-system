@@ -8,13 +8,12 @@
         //CHECKING IF USER IS SEARCH FOR CLIENTS USING HIS REFERENCE NUMBER;
         $searchData = $_POST['searchUser'];
         if (is_numeric($searchData)) {
-            //search for clients using their reference number
             $searchResult = $customerObject->searchCleintByNumber($searchData,$con);
-            return $searchResult;
+            echo json_encode($searchResult);
         }else {
             //search for clients using the firstname or lastname;
             $nameSearchResult = $customerObject->searchByName($searchData,$con);
-            return $nameSearchResult;
+            echo json_encode($nameSearchResult);
         }
     }
 ?>

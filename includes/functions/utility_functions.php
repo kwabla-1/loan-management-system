@@ -62,7 +62,7 @@
 
     function getChronicClients($con)
     {
-        $sql = "SELECT clients.fullname, clients.telephone,clients.client_id, account.loanAmount, account.pendingBalance,account.completePayment FROM clients INNER JOIN account ON account.cleintID_fk = clients.client_id INNER JOIN chronic ON chronic.clientID_fk = clients.client_id AND account.cleintID_fk = chronic.clientID_fk";
+        $sql = "SELECT clients.fullname, clients.telephone,clients.client_id,clients.location,clients.votersID, account.loanAmount,account.laonReceivedOn, account.pendingBalance,account.completePayment FROM clients INNER JOIN account ON account.cleintID_fk = clients.client_id INNER JOIN chronic ON chronic.clientID_fk = clients.client_id AND account.cleintID_fk = chronic.clientID_fk";
 
         $query = $con->prepare($sql);
         $query->execute();
@@ -74,6 +74,18 @@
     function deleterFromChronic($con,$cliendID)
     {
         $sql = "DELETE FROM chronic WHERE clientID_fk = $cliendID";
+        $query = $con->prepare($sql);
+        $query->execute();
+        if($query -> rowCount() > 0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    function deleteFromBlacklist($con,$blacklistID)
+    {
+        $sql = "DELETE FROM blacklist WHERE clientID_FK  = $blacklistID";
         $query = $con->prepare($sql);
         $query->execute();
         if($query -> rowCount() > 0){

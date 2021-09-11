@@ -192,3 +192,38 @@ CODE OF DISPLAYING ALL EMPLOYEES
 
                                     <!-- </tbody> -->
                                 <!-- </table> -->
+
+
+
+                                res => {
+        if (searchdata) {
+            if (res) {
+                for (let i = 0; i < res.length; i++) {
+                    searchResultContainer.innerHTML =  `<a href="#" class="link_clear searchResultLink">
+                    <div class="searchImageResult" style="margin-right: 20px;">
+                        <img src="../img/img_avatar.png" alt="user image" style="border-radius: 100px; width: 30px;">
+                    </div>
+                    <div class="searchTextResult">
+                        <div class="clientInforSeacrch">
+                            <span style="font-weight: bold;font-size: 1.5rem;">${res['fullname']}</span>
+                        </div>
+                        <div class="clientGurantorInforSearch">
+                            <span>0543234234</span>
+                        </div>
+                    </div>
+                </a>`;
+                }
+               
+            }else{
+                searchResultContainer.innerHTML = '';
+            }
+            
+        }else{
+            searchResultContainer.innerHTML = '';
+        }
+    }
+
+
+
+    ${clientdata.client_id},${clientdata.fullname},${clientdata.location},${clientdata.telephone},${clientdata.votersID},${clientdata.laonReceivedOn}
+    ,location,telephone,votersid,date

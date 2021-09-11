@@ -555,14 +555,22 @@ body{
     background-color: white;
     margin: 0 7rem;
     z-index: 10;
+    overflow: hidden;
 }
 
 .searchResultLink{
     display: flex;
     align-items: center;
     font-size: 1.3rem;
-    margin: 2rem;
+    /* margin: 2rem; */
     width: 33rem;
+    padding: 1rem;
+   
+}
+
+.searchResultLink:hover{
+    background-color: green;
+    
 }
 
 /* ======================== MAIN CONTENT STYLES =================================== */

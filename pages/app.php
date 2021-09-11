@@ -62,8 +62,8 @@
     $allemployees = $employeeObject->getAllEmployee($con);
 
     // =================== CHRONIC SECTION ===================
-    $today = date('Y-m-d');
-    // $today = '2021-12-11';
+    // $today = date('Y-m-d');
+    $today = '2021-12-30';
     // // echo $today;
 
     foreach ($allCLients as $key => $value) {
@@ -117,8 +117,9 @@
                         <span class="lnr lnr-magnifier"></span>
                     </button>
                 </div>
-                <div class="searchResults">
-                    <a href="#" class="link_clear searchResultLink">
+                <div class="searchResults" id="liveSearchData">
+
+                    <!-- <a href="#" class="link_clear searchResultLink">
                         <div class="searchImageResult" style="margin-right: 20px;">
                             <img src="../img/img_avatar.png" alt="user image" style="border-radius: 100px; width: 30px;">
                         </div>
@@ -130,33 +131,9 @@
                                 <span>0543234234</span>
                             </div>
                         </div>
-                    </a>
-                    <a href="#" class="link_clear searchResultLink">
-                        <div class="searchImageResult" style="margin-right: 20px;">
-                            <img src="../img/img_avatar.png" alt="user image" style="border-radius: 100px; width: 30px;">
-                        </div>
-                        <div class="searchTextResult">
-                            <div class="clientInforSeacrch">
-                                <span style="font-weight: bold;font-size: 1.5rem;">Martin Ahedor</span>
-                            </div>
-                            <div class="clientGurantorInforSearch">
-                                <span>0543234234</span>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="link_clear searchResultLink">
-                        <div class="searchImageResult" style="margin-right: 20px;">
-                            <img src="../img/img_avatar.png" alt="user image" style="border-radius: 100px; width: 30px;">
-                        </div>
-                        <div class="searchTextResult">
-                            <div class="clientInforSeacrch">
-                                <span style="font-weight: bold;font-size: 1.5rem;">Martin Ahedor</span>
-                            </div>
-                            <div class="clientGurantorInforSearch">
-                                <span>0543234234</span>
-                            </div>
-                        </div>
-                    </a>
+                    </a> -->
+                    
+                    
                 </div>
             </form> 
            
@@ -206,7 +183,7 @@
                         <?php 
                             if ($role !== 'Read') {
                                 echo "
-                                <li class=\"list\" onclick=\"openTab('registration')\" >
+                                <li class=\"list\" onclick=\"openBTab(event,'add_borrower')\" >
                                     <a href=\"#registration\" class=\"dropdown_button\">
                                         <span class=\"icon\"><ion-icon name=\"person-add-outline\"></ion-icon></span>
                                         <span class=\"title arrowIndicator\">Registration <ion-icon class=\"arrowRight\" name=\"chevron-forward-outline\"></ion-icon></span>
@@ -256,6 +233,13 @@
                             <a href="#repayments">
                                 <span class="icon"><ion-icon name="wallet-outline"></ion-icon></span>
                                 <span class="title">Repayments</span>
+                            </a>
+                        </li>
+
+                        <li  class="list" onclick="openTab('blacklist')">
+                            <a href="#blacklist">
+                                <span class="icon"><ion-icon name="alert-circle-outline"></ion-icon></span>
+                                <span class="title">Blacklist</span>
                             </a>
                         </li>
                     </ul>
@@ -379,7 +363,7 @@
 
                                 <div class="customer__header">
                                     <h2>Customers</h2>
-                                    <a href="#" class="btn btn--primary"  onclick="openTab('registration')">+ Add Customer</a>
+                                    <a href="#" class="btn btn--primary"  onclick="openBTab(event,'add_borrower')">+ Add Borrower</a>
                                 </div>
                                 <div class="custom-table">
                                     <div class="table-header1">
@@ -512,7 +496,7 @@
                                 <div class="customer__header">
                                     <h2>Chronic Customers </h2>
                                     <p class="date">Date: <span id="datetime"></span></p>
-                                    <a href="./pages/Print/Chronic.html" class="btn btn--primary" target="_blank" >Print</a>   
+                                    <a href="../pages/Print/Chronic.html" class="btn btn--primary" target="_blank" >Print</a>   
                                 </div>
 
                                 <div class="custom-table">
@@ -776,6 +760,46 @@
                         </div>
                     </div>
 
+                    <div class="tab__content-item " id="blacklist" style="display: none;">
+                        <div class="repayments__container fadIn">
+                            <div class="table__container">
+                               
+                                <div class="customer__header">
+                                    <h2>Blacklist &nbsp;  <span id="day"></span> </h2>
+                                    <a href="./pages/Print/repayment.html" class="btn btn--primary" target="_blank">+ Print Table</a>
+                                    
+                                </div>
+                                
+                                <div class="custom-table">
+                                    <div class="table-header1">
+                                        <table cellpadding="0" cellspacing="0" border="0" class="assessmentTable-head">
+                                            <thead>
+                                            <tr>
+                                                <th>img</th>
+                                                <th>Fullname</th>
+                                                <th>Number</th>
+                                                <th>Location</th>
+                                                <th>Voters ID</th>
+                                                <th>Date registered</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+
+                                    <div class="table-content">
+                                    <table cellpadding="0" cellspacing="0" border="0" class="assessmentTable" id="blacklisttable">
+                                        <tbody>
+                                            <!-- DATA WILL BE LOADED BY JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <!-- ADD BORROWER TAB CONTENT -->
                     <div id="add_borrower" class="tab__content-item" style="display: none;">
                         <div class="add_borrowerContainer fadIn">
@@ -816,6 +840,12 @@
                                             <label for="">Enter Borrower's mobile number</label>
                                            
                                             <input type="number" placeholder="Mobile number" name="b_mobileNumber" class="borrower_data" required>
+                                        </div>
+
+                                        <div class="form-control">
+                                            <label for="">Enter Borrower's Voters ID</label>
+                                           
+                                            <input type="text" placeholder="Voters ID" name="b_votersID" class="borrower_data" required>
                                         </div>
 
                                         <div class="form-control">
@@ -1143,6 +1173,7 @@
             getAllRegisteredClient();
             getChronicCLients();
             loadAllEmployees();
+            getBlacklistedClients();
         });
 
     </script>

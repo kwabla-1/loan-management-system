@@ -21,6 +21,9 @@ const disbursementTable = document.getElementById("disbursementTable").getElemen
 const customerTable = document.getElementById("allCustomerTable").getElementsByTagName('tbody')[0];
 const chronicTable = document.getElementById("chronicTable").getElementsByTagName('tbody')[0];
 const employeeTable = document.getElementById("employeeTable").getElementsByTagName('tbody')[0];
+const blacklisttable = document.getElementById("blacklisttable").getElementsByTagName('tbody')[0];
+const searchResultContainer = document.getElementById('liveSearchData');
+
 
 // ============================  DISPLAY INPUT FIELD ==================================
 function showInputField(nameSelect) {
@@ -414,7 +417,7 @@ function populateEmployeeTable(data) {
             <td>${employee.department}</td>
            
             <td data-label='status'>
-                <a href='#' class='status ontime link_clear recommendButtom'>View Infor</a>
+                <a href='../pages/clients/profile.php?employeeID=${employee.id}' class='status ontime link_clear recommendButtom'>View Infor</a>
             </td>
         </tr>
         `;
@@ -617,6 +620,16 @@ function deleteChronicUser(chronicID) {
     ajaxRequest.send();
 }
 
+function deleteBlacklistUser(blacklistID) {
+    fetch(`../requests/chronicRequest.php?blacklistDeleteID=${blacklistID}`,{
+        method: "GET",
+    }).then(res => res.text())
+    .then(jsondata => {
+        generalShowSuccessMessage(jsondata);
+        getBlacklistedClients();
+    });
+}
+
 function getAllApprovedCLients() {
     let ajaxRequest = new XMLHttpRequest(); 
     const method = "GET";
@@ -783,7 +796,7 @@ function populateRegisteredClients(data) {
             
             
             <td data-label='status'>
-                <span class='status update'><a href='./clients/profile.html?c_id={$clientid}' class='link_clear'>Update</a></span>
+                <span class='status update'><a href='../pages/clients/profile.php?cliendID=${registerCLients.client_id}' class='link_clear'>Update</a></span>
             </td>
         </tr>
         `;
@@ -840,6 +853,46 @@ function getChronicCLients() {
     ajaxRequest.send();
 }
 
+function getBlacklistedClients() {
+    fetch("../requests/chronicRequest.php?getAllBlacklistedClients",{
+        method: "GET",
+    }).then(res => res.json())
+    .then(jsondata => {
+        if (jsondata) {
+            populateBlacktable(jsondata);
+        }else{
+            blacklisttable.innerHTML = "<h1>SORRY NO BLACKLISTED CLIENTS</h1>";
+        }
+    });
+}
+
+function populateBlacktable(jsondata) {
+    if (blacklisttable.firstChild) {
+        while (blacklisttable.firstChild) {
+            blacklisttable.removeChild(blacklisttable.firstChild);
+        }
+    }
+
+    jsondata.forEach(blacklistData => {
+        let tableData = `<tr class='customer__table-body-row'>
+            <td><img src='../img/img_avatar2.png' alt='User image' style='width: 30px; border-radius: 100px;'></td>
+            <td>${blacklistData.fullname}</td>
+            <td>${blacklistData.telephone}</td>
+            <td>${blacklistData.location}</td>
+            <td>${blacklistData.votersID}</td>
+            <td>${blacklistData.date_added}</td>
+            
+            
+            
+            <td data-label='status'>
+                <span class='status danger'><a href='#' class='link_clear' onclick="deleteBlacklistUser(${blacklistData.client_id}); return false;">Delete</a></span>
+            </td>
+        </tr>
+        `;
+        let newRow = blacklisttable.insertRow(blacklisttable.rows.length);
+        newRow.innerHTML = tableData;
+    })
+}
 
 function populateChronicTable(data) {
     if (chronicTable.firstChild) {
@@ -861,7 +914,8 @@ function populateChronicTable(data) {
             
             <td data-label='status'>
                 <span class='status danger'><a href='#' class='link_clear' onclick="deleteChronicUser(${clientdata.client_id}); return false;">Delete</a></span>
-                <span class='status ontime'><a href='#' class='link_clear'>Details</a></span>
+                <span class='status ontime'><a href='../pages/clients/profile.php?cliendID=${clientdata.client_id}' class='link_clear'>Details</a></span>
+                <span class='status ontime'><a href='#' class='link_clear blacklistButtons' onclick='addToBlacklist(${clientdata.client_id})'>blacklist</a></span>
             </td>
         </tr>
         `;
@@ -872,25 +926,69 @@ function populateChronicTable(data) {
 }
 
 
+function addToBlacklist(cid) {
+    fetch("../requests/chronicRequest.php",{
+        method: "POST",
+        body: new URLSearchParams(`blacklistID=${cid}`)
+    }).then(res => res.text())
+    .then(jsondata => {
+        generalShowSuccessMessage(jsondata);
+        getBlacklistedClients();
+    });
+}
+
 function getLiveUserSearch(data) {
-    // console.log(data);
-    fetchSearchData(data);
+    if (data) {
+        if (!isNaN(data)) {
+            if (data.length == 4) {
+                fetchSearchData(data);
+            }
+        }else{
+            fetchSearchData(data);
+        }
+    }else{
+
+    }
+    searchResultContainer.innerHTML = "";
 }
 
 function fetchSearchData(searchdata) {
+   
     fetch("../handlers/search.php",{
         method: "POST",
         body: new URLSearchParams('searchUser='+searchdata)
     })
-    .then(res => res.text())
-    .then(res => console.log(res))
-    .catch( e => console.log("Error: "+ e));
+    .then(res => res.json())
+    .then(jsonData => {
+        
+        if (jsonData) {
+            jsonData.forEach(clientData => {
+                let stringTemplate = `<a href="../pages/clients/profile.php?cliendID=${clientData.client_id}" class="link_clear searchResultLink">
+                <div class="searchImageResult" style="margin-right: 20px;">
+                    <img src="../img/img_avatar.png" alt="user image" style="border-radius: 100px; width: 30px;">
+                </div>
+                <div class="searchTextResult">
+                    <div class="clientInforSeacrch">
+                        <span style="font-weight: bold;font-size: 1.5rem;">${clientData.fullname}</span>
+                    </div>
+                    <div class="clientGurantorInforSearch">
+                        <span>${clientData.telephone}</span>
+                    </div>
+                </div>
+            </a>`;
+            searchResultContainer.innerHTML = stringTemplate;
+            }); 
+        }
+    })
+    .catch( e => console.log(e));
 }
+
+
+
 
 // ============================ END ASYNC FUNCTION ==================================
 // ACTIVATING THE RECOMMEND MODAL WHEN THE RECOMMEND BUTTON IS PRESSED;
 function recommendCLient() {
-    console.log(event.target)
     const borrowerID = event.target.id;
     const fieldform = document.getElementById('fieldForm');
     

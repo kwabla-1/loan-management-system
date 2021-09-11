@@ -37,6 +37,7 @@ Before a user is added to the customers section
 5.if admin approve a loan change status to approve, and update the recommend amount,
 
 
+
 total chronic dashboard;
 call centre -- add borrower, customers, repayment;
 if an employee is from the callcenter departement, 
@@ -60,3 +61,18 @@ amounttaken * 34% = interest;
 
 amounttaken + interest = total repayment;
 pendingbalance / 16 = weekly payment;
+
+
+
+ //CHECKING IF USER IS SEARCH FOR CLIENTS USING HIS REFERENCE NUMBER;
+        $searchData = $_POST['searchUser'];
+        if (is_numeric($searchData)) {
+            if (strlen($searchData) == 4) {
+                $searchResult = $customerObject->searchCleintByNumber($searchData,$con);
+                echo json_encode($searchResult);
+            }
+        }else {
+            //search for clients using the firstname or lastname;
+            $nameSearchResult = $customerObject->searchByName($searchData,$con);
+            echo json_encode($nameSearchResult);
+        }

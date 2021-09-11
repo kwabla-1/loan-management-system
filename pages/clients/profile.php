@@ -1,3 +1,16 @@
+<?php 
+    include "../../config/config.php";
+    include "../../includes/class/Customers.php";
+
+    $customerObject = new Customer($con);
+    // $allClientDetails = $customerObject->getAllCLientInfor(($con))
+    if (isset($_GET['cliendID'])) {
+        $clientID = $_GET['cliendID'];
+        $clientData = $customerObject->getClientById($clientID,$con);
+        var_dump($clientData[0]);
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,41 +49,41 @@
             <div class="left__content">
                 <div class="top__section">
                     <img src="../../img/img_avatar.png" alt="client image" class="user-icon">
-                    <h2>Tupack Amuri</h2>
-                    <h3>054-2186-981</h3>
-                    <h3>Dansoman</h3>
+                    <h2><?php echo $clientData[0]['fullname'] ?></h2>
+                    <h3><?php echo $clientData[0]['telephone'] ?></h3>
+                    <h3><?php echo $clientData[0]['location'] ?></h3>
                 </div>
     
                 <div class="bottom__section">
                     <div class="pair">
                         <div class="one">
-                            <span>Fullname: <span class="bold">Martin Tupack</span></span>
-                            <span>Location: <span class="bold">Dansoman</span></span>
-                            <span>Number: <span class="bold">0543212876</span></span>
+                            <span>Fullname: <span class="bold"><?php echo $clientData[0]['fullname'] ?></span></span>
+                            <span>Location: <span class="bold"><?php echo $clientData[0]['location'] ?></span></span>
+                            <span>Number: <span class="bold"><?php echo $clientData[0]['telephone'] ?></span></span>
                         </div>
                         
                         <div class="one">
-                            <span>Loan: <span class="bold">Gh$100,00</span></span>
-                            <span>Pending: <span class="bold">Gh$20000</span></span>
-                            <span>Total payment <span class="bold">Gh$10,00</span></span>
+                            <span>Loan: <span class="bold"><?php echo $clientData[0]['loanAmount'] ?></span></span>
+                            <span>Pending: <span class="bold">Gh$<?php echo $clientData[0]['pendingBalance'] ?></span></span>
+                            <span>Total payment <span class="bold">Gh$<?php echo $clientData[0]['laonInterest'] ?></span></span>
                         </div>
 
                         <div class="one">
-                            <span>Complete payment: <span class="bold">13th April 2021</span></span>
-                            <span>Next payment: <span class="bold">13th April 2021</span></span>
-                            <span>Reference: <span class="bold">#45bd</span></span>
+                            <span>Complete payment: <span class="bold"><?php echo $clientData[0]['completePayment'] ?></span></span>
+                            <span>Next payment: <span class="bold"><?php echo $clientData[0]['nextPayment'] ?></span></span>
+                            <span>Reference: <span class="bold">#<?php echo $clientData[0]['reference_code'] ?></span></span>
                         </div>
 
                         <div class="one">
-                            <span>Status: <span class="bold">on-truck</span></span>
+                            <span>Status: <span class="bold"><?php echo $clientData[0]['status'] ?></span></span>
                             <span>Chronic: <span class="bold">No</span></span>
-                            <span>Weeks: <span class="bold">2 weeks</span></span>
+                            <span>Weeks: <span class="bold"><?php echo $clientData[0]['daysLeft'] ?></span></span>
                         </div>
 
                         <div class="one">
-                            <span>Gurantors: <span class="bold">Martin Tupack</span></span>
-                            <span>Location: <span class="bold">Dansoman</span></span>
-                            <span>Number: <span class="bold">0542123121</span></span>
+                            <span>Gurantors: <span class="bold"><?php echo $clientData[0]['gfullname'] ?></span></span>
+                            <span>Location: <span class="bold"><?php echo $clientData[0]['glocation'] ?></span></span>
+                            <span>Number: <span class="bold"><?php echo $clientData[0]['gtelephone'] ?></span></span>
                         </div>
                     </div>
                 </div>

@@ -60,6 +60,7 @@
             $glocation = $queryResult[0]['gurantorsfLocation'];
             $gtelephone = $queryResult[0]['gurantorsnumber'];
             $gclient_id_FK  = $queryResult[0]['borrowerID']; 
+            $vID = $queryResult[0]['votersID'];
 
             //ACCOUNT RECORDS
                     //pending loan;
@@ -68,13 +69,14 @@
             $pendingLoan = $pencentageInterest + $amount_borrowed;
 
             //INSERTING INTO THE CLIENTS TABLE;
-            $sql1 = "INSERT INTO clients (fullname,occupation,telephone,location,reference_code) VALUES (:name,:occupation,:tel,:location,:ref)";
-            $query1 = $con->prepare($sql1);
+            $sql1 = "INSERT INTO clients (fullname,occupation,telephone,location,reference_code,votersID) VALUES (:name,:occupation,:tel,:location,:ref,:votersid)";
+            $query1 = $con->prepare($sql1);       
             $query1->bindParam(':name',$clientFullname);
             $query1->bindParam(':occupation',$occupation);
             $query1->bindParam(':tel',$telephone);
             $query1->bindParam(':location',$location);
             $query1->bindParam(':ref',$reference_code);
+            $query1->bindParam(':votersid',$voterse_id);
 
             //cleints records
             $clientFullname = $queryResult[0]['b_fullname'];
@@ -82,6 +84,7 @@
             $telephone = $queryResult[0]['b_contact'];
             $location = $queryResult[0]['b_businessLocation'];
             $reference_code = $reference_key;
+            $voterse_id = $vID;
 
             // return $gfullname;
 
