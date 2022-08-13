@@ -227,3 +227,83 @@ CODE OF DISPLAYING ALL EMPLOYEES
 
     ${clientdata.client_id},${clientdata.fullname},${clientdata.location},${clientdata.telephone},${clientdata.votersID},${clientdata.laonReceivedOn}
     ,location,telephone,votersid,date
+
+
+
+    ------------------------------------------- OLD FOR THE DISBURSMENT MODE ======================================================
+    if (nameSelect.value == "momo") {
+        
+        const fieldform = document.getElementById('momoDiv');
+        const momoInput = document.getElementById('momoNumber');
+
+        if (momoInput) {
+            fieldform.removeChild(document.getElementById('momoNumber'));
+        }
+
+        let children = fieldform.childNodes;
+        children.forEach(function(item){
+            if (item.id == 'momoNumber') {
+                fieldform.removeChild(document.getElementById('momoNumber')) ;
+            }
+        });
+
+        const momoNumberinput = document.createElement("input");
+        momoNumberinput.placeholder = "Enter Momo Number"
+        momoNumberinput.setAttribute('type','number');
+        momoNumberinput.setAttribute('id', 'momoNumber');
+        momoNumberinput.setAttribute('name', 'momoNumber');
+        momoNumberinput.className= "borrower_data";
+        fieldform.appendChild(momoNumberinput);
+        
+        document.getElementById("momoDiv").style.display = "block";
+        document.getElementById("accountHolderDiv").style.display = "none";
+
+       
+    }else if (nameSelect.value == "account") {
+
+        const fieldform1 = document.getElementById('accountHolderDiv');
+
+        NodeList.prototype.forEach = Array.prototype.forEach
+        let children = fieldform1.childNodes;
+        children.forEach(function(item){
+            if (item.id == 'accountName') {
+                fieldform1.removeChild(document.getElementById('accountName')) ;
+                fieldform1.removeChild(document.getElementById('accountNUmber')) ;
+            }
+        });
+
+        const accountNameInput = document.createElement("input");
+        accountNameInput.placeholder = "Enter account name"
+        accountNameInput.setAttribute('type','text');
+        accountNameInput.setAttribute('id','accountName');
+        accountNameInput.setAttribute('name', 'accountName');
+        accountNameInput.className= "borrower_data";
+
+        const accountNumberInput = document.createElement("input");
+        accountNumberInput.placeholder = "Enter account name"
+        accountNumberInput.setAttribute('type','number');
+        accountNumberInput.setAttribute('id','accountNUmber');
+        accountNumberInput.setAttribute('name', 'accountNumber');
+        accountNumberInput.className = "borrower_data";
+
+        
+        fieldform1.appendChild(accountNameInput);
+        fieldform1.appendChild(accountNumberInput);
+
+        document.getElementById("accountHolderDiv").style.display = "block";
+        document.getElementById("momoDiv").style.display = "none";
+        
+    }else{
+        document.getElementById("accountHolderDiv").style.display = "none";
+        document.getElementById("momoDiv").style.display = "none";
+        
+        
+    }
+
+    SELECT borrower.*,fieldassements.*,clients.client_id FROM borrower 
+	JOIN fieldassements ON borrower.b_id = fieldassements.borrowerID 
+    JOIN clients ON clients.fullname = borrower.b_fullname
+    WHERE fieldassements.approved = true
+
+
+    $sql = "SELECT borrower.*,fieldassements.* FROM borrower JOIN fieldassements ON borrower.b_id = fieldassements.borrowerID WHERE fieldassements.approved = true";

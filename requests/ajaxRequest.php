@@ -68,11 +68,13 @@
         //------------------------ END GARA ---------------------------------------
         echo $regClient;
 
-    }elseif (isset($_GET['adminDeleteClient'])) {
-        $borrowerID = $_GET['adminDeleteClient'];
-        $deleteResult = $borrwerObject->deleteBorrower($borrowerID,$con);
+    }elseif (isset($_GET['adminDeleteClient']) and isset($_GET['CleintDelID'])) {
+        $borrowerID = $_GET['adminDeleteClient'];//borrower id;
+        $idCLient = $_GET['CleintDelID'];// client id;
+        // $deleteResult = $borrwerObject->deleteBorrower($borrowerID,$idCLient,$con);
+        $resultAfterDeleting = $borrwerObject->deleteBorrowerAndCLient($borrowerID,$idCLient,$con);
         
-        echo $deleteResult;
+        echo json_encode($resultAfterDeleting);
     }elseif (isset($_GET['disbursementlist'])) {
         $allAdminApproved = $borrwerObject->getAllApprovedClients($con);
         if ($allAdminApproved) {
@@ -80,14 +82,15 @@
         }else {
             echo "NODISPURSEMENTLIST";
         }
-    }elseif (isset($_GET['paymentID']) and isset($_GET['loanAmount'])) {
+    }elseif (isset($_GET['paymentID']) and isset($_GET['loanAmount']) and isset($_GET['IDborrower'])) {
         $cId = $_GET['paymentID'];
         $loanAmount = $_GET['loanAmount'];
-        $accountInsertResult = $accountObject->insertIntoAccout($con,$cId,$loanAmount);
+        $BID = $_GET['IDborrower'];
+        $accountInsertResult = $accountObject->insertIntoAccout($con,$cId,$BID,$loanAmount);
         if ($accountInsertResult) {
             echo $accountInsertResult;
         }else{
-            echo "INSRTINTOACCOUNTFAILED";
+            print_r($accountInsertResult) ;
         }
     }elseif (isset($_GET['getAllCurrentClient'])) {
         $allCLients = $clientOBject->getAllCLientInfor($con);

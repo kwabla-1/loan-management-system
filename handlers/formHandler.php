@@ -1,10 +1,10 @@
-<?php 
+<?php
     //CONFIG FILE
     include "../config/config.php";
 
     if (isset($_POST["login"])) {
         $username = $_POST['username'];
-		$password = $_POST['password'];
+		      $password = $_POST['password'];
 
         // $username;
         // $password;
@@ -21,7 +21,7 @@
             $sql = "SELECT * FROM admin WHERE username = :user and password = :pass LIMIT 1";
             $query = $con->prepare($sql);
             $query->bindParam(":user",$username);
-			$query->bindParam(':pass',$password);
+			       $query->bindParam(':pass',$password);
             $query->execute();
 
             $query_result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -30,25 +30,30 @@
                 if (!isset($_SESSION['login_user'])) {
                     $_SESSION['login_user'] = $query_result[0]['fullname'];
                 }
-                
+                //setting the privilages
+                if (!isset($_SESSION['department'])) {
+                    $_SESSION['department'] = 'Admin';
+                }
                 unset($_SESSION['attempt']);
                 header('Location: ../pages/app.php');
             }else{
                 //checking the employee table
-                $employee_sql  = "SELECT * FROM employees WHERE username = :e_username AND password = :e_password LIMIT 1";
+                $employee_sql  = "SELECT * FROM employees WHERE staffID = :e_username AND password = :e_password LIMIT 1";
                 $employee_query = $con->prepare($employee_sql);
                 $employee_query->bindParam(":e_username",$username);
-                $employee_query->bindParam(":e_password",$password);	
+                $employee_query->bindParam(":e_password",$password);
 
                 $employee_query->execute();
 
                 $e_query_result = $employee_query->fetchAll(PDO::FETCH_ASSOC);
                 if ($e_query_result) {
-                    // $_SESSION['login_user'] = true;
                     $testing = $e_query_result;
                     if (!isset($_SESSION['login_user'])) {
-                        $_SESSION['login_user'] = $e_query_result[0]['staffID'];
-                        // $_SESSION['login_user'] = $e_query_result[0]['lastname'];
+                        $_SESSION['login_user'] = $e_query_result[0]['fullname'];
+                    }
+                    //setting the privilages
+                    if (!isset($_SESSION['department'])) {
+                        $_SESSION['department'] = $e_query_result[0]['department'];
                     }
                     unset($_SESSION['attempt']);
                     header('Location: ../pages/app.php');
@@ -63,10 +68,10 @@
 						//note 5*60 = 5mins, 60*60 = 1hr, to set to 2hrs change it to 2*60*60
 					}
                 }
-                
+
             }
-       
-       
+
+
     }
 
 }elseif (isset($_POST['recommendBorrower'])) {
@@ -81,14 +86,14 @@
 
     $gname = $_POST['g_name'];
     $approveclient = true;
-	$glocation = $_POST['g_location'];
-	$gnumber = $_POST['g_number'];
-	$recommend_amount = $_POST['recommendedAmount'];
+	   $glocation = $_POST['g_location'];
+	    $gnumber = $_POST['g_number'];
+	     $recommend_amount = $_POST['recommendedAmount'];
     $borrowerID = $_POST['borrowerID'];
 
     $query->execute();
     $lastinsertedID = $con->lastInsertId();
-    
+
 
     if ($lastinsertedID > 0) {
         // UPDATE THE THE BORROWERS TABLE TO BE ASSESSED;
@@ -101,7 +106,7 @@
         }else {
             echo "update of the borrower accessed failed";
         }
-        
+
     }else{
         echo "insertion for borrower failde";
     }
@@ -120,5 +125,25 @@
     }else {
         echo "sorryupdatefail";
     }
+}
+
+if (isset($_POST['addExpense'])) {
+  $expseDescription = $_POST['expenseDescription'];
+  $expseDate = $_POST['expenseDate'];
+  $expseAmount = $_POST['expenseAmount'];
+
+  //perform calcuations;
+  $sql = "INSERT INTO expenses(expenseDescription,expenseDate,expenseAmount) VALUES ('$expseDescription', '$expseDate', $expseAmount)";
+  $query = $con->prepare($sql);
+  $query->execute();
+
+  $lastinsertedID = $con->lastInsertId();
+  if ($lastinsertedID > 0) {
+      echo "INSERTIONSUCCESS";
+  }else{
+      echo "INSERTIONFAILED";
+  }
+
+
 }
 ?>

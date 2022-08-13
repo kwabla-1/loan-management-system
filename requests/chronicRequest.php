@@ -23,7 +23,8 @@
         }
     }elseif (isset($_POST['blacklistID'])) {
         $blacklistID = $_POST['blacklistID'];
-        $insertionData = $clientOBject->insertIntoBlacklistTable($con,$blacklistID);
+        $votersID = $_POST['clientsVotersID'];
+        $insertionData = $clientOBject->insertIntoBlacklistTable($con,$blacklistID,$votersID);
         
         echo $insertionData;
     }elseif (isset($_GET['getAllBlacklistedClients'])) {

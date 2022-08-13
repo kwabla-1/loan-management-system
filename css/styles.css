@@ -14,12 +14,12 @@
 
 ::-webkit-scrollbar {
     width: 6px;
-} 
+}
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.61); 
-} 
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.61);
+}
 ::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.61); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.61);
 }
 
 *{
@@ -54,7 +54,7 @@ body{
 .skeleton {
     opacity: .7;
     animation: skeleton-loading 1s linear infinite alternate;
-    
+
 }
 
 .skeletontable{
@@ -69,18 +69,50 @@ body{
     margin: 1rem;
     border-radius: .125rem;
   }
-  
+
 
 
 @keyframes skeleton-loading {
     0% {
       background-color: hsl(0, 0%, 89%);
     }
-  
+
     100% {
       background-color: hsl(200, 20%, 95%);
     }
 }
+
+/* -----------------------------------------------------------------
+-------------------- SPINNER LOADING  ----------------------
+----------------------------------------------------------------- */
+.spinner__container{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(42, 41, 41, 0.408);
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#loadingSpinerr {
+
+    width: 100px;
+    height: 100px;
+    border: 13px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+  }
+
+  @keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
+  @-webkit-keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
 
 /* -----------------------------------------------------------------
 -------------------- h1 STYLES  ----------------------
@@ -157,7 +189,7 @@ body{
     grid-gap: 20px;
     align-items: center;
 }
-    
+
 .seven h1:after,.seven h1:before {
     content: " ";
     display: block;
@@ -178,7 +210,7 @@ body{
     color: white;
     font-size: 1.4rem;
     font-weight: bold;
-    margin: 3rem 11rem; 
+    margin: 3rem 11rem;
     pointer-events: none;
     visibility: hidden;
     width: 80%;
@@ -194,7 +226,7 @@ body{
 #formMessageSuccess{
     background-color: rgb(80, 201, 80);
     padding: 3rem 10rem;
-    border-radius: 10px; 
+    border-radius: 10px;
 }
 
 
@@ -218,7 +250,7 @@ body{
 .main__container{
     height: 100vh;
     width: 100vw;
-    
+
 }
 
 .link-normalize{
@@ -260,10 +292,19 @@ body{
 
 }
 
+.lateonpayment{
+    background-color: #c50000;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
 /* START TESTING */
 .navigation{
     position: relative;
-    height: 50rem;
+    height: 60rem;
     width: 7rem;
     /* box-shadow: 10px 0 0 red; */
     /* border-left: 10px solid #5b2828; */
@@ -318,7 +359,7 @@ body{
     text-decoration: none;
     color: white;;
 }
- 
+
 .navigation ul li a .icon{
     position: relative;
     text-align: center;
@@ -344,7 +385,7 @@ body{
     line-height: 6rem;
     white-space: nowrap;
     font-size: 1.6rem;
-} 
+}
 
 .dropdown_link{
     text-decoration: none;
@@ -368,7 +409,7 @@ body{
     text-decoration: none;
     display: block;
     text-align: left;
-    
+
 }
 .dropdown_content a:hover {background-color: #f1f1f1;}
 
@@ -468,7 +509,7 @@ body{
 
 .side_nav-item{
     position: relative;
-    
+
 }
 
 .side_nav-item:not(:last-child){
@@ -506,7 +547,7 @@ body{
     padding: 1.5rem 3rem;
     position: relative;
     z-index: 10;
-    
+
 }
 
 .side_nav-link:hover{
@@ -565,12 +606,12 @@ body{
     /* margin: 2rem; */
     width: 33rem;
     padding: 1rem;
-   
+
 }
 
 .searchResultLink:hover{
     background-color: green;
-    
+
 }
 
 /* ======================== MAIN CONTENT STYLES =================================== */
@@ -617,7 +658,7 @@ body{
 	width: 18%;
 	background-color: blue;
 	border-radius: 3px;
-	
+
 }
 
 .stat_one_container{
@@ -650,7 +691,7 @@ body{
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	padding: 1rem;	
+	padding: 1rem;
 
 	border-bottom: 2px solid white;
 }
@@ -750,7 +791,36 @@ body{
     border: none;
     border-radius: 10px;
     font-weight: bolder;
-   
+}
+
+.btn1{
+    text-decoration: none;
+    color: black;
+    font-size: 1.3rem;
+    padding: 1.5rem 4rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    font-weight: bolder;
+}
+
+.btn__profile{
+    text-decoration: none;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    font-weight: bolder;
+}
+
+.btn--danger{
+    background-color: crimson;
+    color: white;
+}
+
+.btn--update{
+    background-color: rgb(92, 33, 232);
+    color: white;
 }
 
 .btn--primary{
@@ -763,6 +833,7 @@ body{
 .btn--primary:hover{
     background: linear-gradient(-90deg, #8c1105ff, #25221eff);
 }
+
 
 
 .status{
@@ -778,11 +849,17 @@ body{
 }
 
 .ontime{
-    color: #404040;
+    color: white;
     font-weight: bold;
-    /* padding: .4rem; */
-    /* border: 2px solid rgb(0, 255, 98); */
-    background-color: rgba(0, 255, 21, 0.301);
+    font-size: 1rem;
+    padding: .5em 1rem;
+
+    background-color: limegreen;
+    border-radius: 5px;
+
+    /* color: #404040;
+    font-weight: bold;
+    background-color: rgba(0, 255, 21, 0.301); */
 }
 
 .defaulted{
@@ -795,6 +872,11 @@ body{
 .update{
     color: lawngreen;
     background-color: rgba(126, 252, 0, 0.247);
+}
+
+.read{
+    color: #2000ff;
+    background-color: rgba(15, 50, 238, 0.3);
 }
 
 .date{
@@ -822,6 +904,13 @@ body{
     /* overflow-y: scroll; */
 }
 
+.print__table{
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    justify-content: end;
+    padding: .8rem;
+}
 .table__container{
     padding: 0 2%;
     /* margin: 4rem auto 0; */
@@ -902,7 +991,7 @@ body{
 
 	color: white;
 	font-weight: bold;
-}	
+}
 
 input[type=submit]{
    margin-bottom: 2rem;
@@ -986,6 +1075,16 @@ label{
     justify-content: center;
 }
 
+.actionContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.actionContainer button{
+    margin: 1rem;
+}
+
 /* -----------------------------------------------------------------
 -------------------- PROFILE PAGE STYLES ----------------------
 ----------------------------------------------------------------- */
@@ -1042,7 +1141,8 @@ label{
 .profileInformation__container{
     display: flex;
     border-radius: 5px;
-    padding: 2rem;
+    height: inherit;
+    /* padding: 2rem; */
 }
 
 .left__content{
@@ -1054,18 +1154,17 @@ label{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem;
-    margin: 1rem;
+    /* padding: 2rem; */
+    /* margin: 1rem; */
+    margin-top: 2rem;
+    margin-left: -7rem;
     border-bottom: 1px solid rgb(240, 240, 240);
 }
 .user-icon{
     border-radius: 50%;
-    width: 40%;
+    width: 24%;
 }
 
-.bottom__section{
-    padding: 1rem;
-}
 
 .one{
     display: flex;
@@ -1121,8 +1220,27 @@ label{
 
 .paymentHistory{
     background: linear-gradient(to bottom, #8e0e00, #1f1c18);
-    margin: 2rem;
+    margin: 1rem;
     border-radius: 10px;
+    height: 72vh;
+}
+
+.makePaymentContainer{
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.paymentFormContainer form input,
+.paymentFormContainer form select{
+    padding: 1.5rem 4rem;
+    margin: 1rem;
+}
+
+.paymentFormContainer h2{
+    text-align: center;
 }
 
 .dropstyles{
@@ -1135,7 +1253,7 @@ label{
     display: block;
     font-size: 1.1rem;
     padding: .4rem;
-    
+
 }
 
 .dropstyles a:hover {
@@ -1145,7 +1263,8 @@ label{
     border-bottom-left-radius: 50px;
 }
 
-.dropdownContent{
+.dropdownContent,
+.dropdownContent2{
     display: none;
     padding-top: 1rem;
 }
@@ -1166,6 +1285,136 @@ label{
     width: 60%;
     margin: 0 auto;
 }
+
+
+/* -----------------------------------------------------------------
+-------------------- REPORT TAB ----------------------
+----------------------------------------------------------------- */
+.expense__header{
+  margin: 2rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.expenseBudge{
+  color: white;
+  width: 255px;
+  height: 80px;
+
+  display: flex;
+  justify-content: center;
+
+  border-radius: 4px;
+
+
+}
+
+.expenseBudged-leftitems{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  justify-content: center;
+}
+
+.expenseBudged-leftitems h4{
+  font-size: 1.2rem;
+}
+
+
+.expenseBudged-leftitems span{
+  font-size: 2rem;
+  font-weight: bolder;
+}
+
+.budget__totalInterest{
+  background-color: #4b80bea3;
+  border-bottom: 5px solid #4b80be;
+}
+
+.budget__totalInterestAccrued{
+  background-color: #f18805c7;
+  border-bottom: 5px solid #f18805fc;
+}
+
+.budget__currentInterestAccrued{
+  background-color: #26a000;
+  border-bottom: 5px solid #3b7d29;
+}
+
+.budget__totalExpenses{
+  background-color: #8c1105;
+  border-bottom: 5px solid #d62828;
+}
+
+/* -----------------------------------------------------------------
+-------------------- EXPENSE TAB  ----------------------
+----------------------------------------------------------------- */
+
+.expense-calculator__container{
+
+}
+
+.expense-calculator__container h3{
+    text-align: center;
+    font-size: 2rem;
+    margin: 1rem;
+}
+
+.expense__content{
+  margin: 1.4rem;
+  display: flex;
+}
+
+.expense__content-leftcontent,
+.expense__content-rightcontent{
+  border-radius: 10px;
+  background-color: white;
+  margin: 1rem;
+}
+
+.expense__content-leftcontent{
+  width: 25%;
+}
+
+.expense__content-rightcontent{
+  width: 75%;
+}
+
+.descriptionContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+  overflow: hidden;
+}
+
+.amountContainer,
+.buttonContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 1rem;
+}
+
+.amountContainer input{
+  padding: 1.5rem 4rem;
+  border: 2px solid #dcd9d9;
+  border-radius: 4px;
+  margin: .7rem;
+
+
+}
+
+.descriptionContainer textarea{
+  border: none;
+  resize: none;
+  outline: none;
+  background-color: #f8f6f6;
+  border-radius: 5px;
+}
+
 
 
 /* -----------------------------------------------------------------

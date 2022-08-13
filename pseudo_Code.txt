@@ -62,6 +62,18 @@ amounttaken * 34% = interest;
 amounttaken + interest = total repayment;
 pendingbalance / 16 = weekly payment;
 
+UPDATING THE CLIENTS RECORD;
+ONLY UPDATE 
+    TRACK
+    GURANTORS INFOR
+    LOAN amount
+    DAY LOAN RECEIVED;
+
+// AFTER MAKING A PAYMENT UPDATE
+1.PENDING BALANCE;
+2.NEXT PAYMENT
+3.STATUS TO = LATE ON PAYMENT;
+4.WEEKS LEFT;
 
 
  //CHECKING IF USER IS SEARCH FOR CLIENTS USING HIS REFERENCE NUMBER;
@@ -76,3 +88,96 @@ pendingbalance / 16 = weekly payment;
             $nameSearchResult = $customerObject->searchByName($searchData,$con);
             echo json_encode($nameSearchResult);
         }
+
+
+clients;
+borrower
+gurantors
+
+
+
+
+
+
+REGISTER CLIENT
+ try {
+        $con->beginTransaction();// NEW
+        $sql1 = "INSERT INTO clients (fullname,occupation,telephone,location,reference_code,votersID) VALUES (:name,:occupation,:tel,:location,:ref,:votersid)";
+        $query1 = $con->prepare($sql1);       
+        $query1->bindParam(':name',$clientFullname);
+        $query1->bindParam(':occupation',$occupation);
+        $query1->bindParam(':tel',$telephone);
+        $query1->bindParam(':location',$location);
+        $query1->bindParam(':ref',$reference_code);
+        $query1->bindParam(':votersid',$voterse_id);
+
+        //cleints records
+        $clientFullname = $queryResult[0]['b_fullname'];
+        $occupation = $queryResult[0]['b_businesstype'];
+        $telephone = $queryResult[0]['b_contact'];
+        $location = $queryResult[0]['b_businessLocation'];
+        $reference_code = $reference_key;
+        $voterse_id = $vID;
+
+        // return $gfullname;
+
+    
+        // $query1->execute();   NEW
+        $lastinsertedID = $con->lastInsertId();
+        // return $gclient_id_FK;
+
+        if ($lastinsertedID > 0) {
+            $sql_guarantor = "INSERT INTO guarantors(gfullname,glocation,gtelephone,gclient_id_FK) VALUES(:fullnameg,:locationg,:telg,:cleintfkg) ";
+            $query_guarantor = $con->prepare($sql_guarantor);
+
+            $query_guarantor->bindParam(':fullnameg',$gfullname);
+            $query_guarantor->bindParam(':locationg',$glocation);
+            $query_guarantor->bindParam(':telg',$gtelephone);
+            $query_guarantor->bindParam(':cleintfkg',$borrowerID);
+
+            $query_guarantor->execute();
+            $lastinsertedID2 = $con->lastInsertId();
+            if ($lastinsertedID2 > 0) {
+                $sql1 = "UPDATE fieldassements SET approved = true WHERE borrowerID = $borrowerID";
+                $query1 = $con->prepare($sql1);
+                $query1->execute();
+
+                if ($query1->rowCount() > 0) {
+                    return true;
+                }else {
+                    echo "update of the borrower accessed failed";
+                }
+            }
+            
+        }else {
+            return false;
+        }
+
+    } catch (PDOException $e) {
+        return $e->getMessage();
+    }
+
+
+-------------------------------------------------------------------- priviledges --------------------------------------------------
+CALL CENTER == add_borrower and Enter payment;
+Loan Officer == Assessment and cleint detaild without 
+
+
+-------------------------------------------------------------------- priviledges --------------------------------------------------
+1. profile
+Total payments = total interest;
+pending
+2.managers == chronic;
+fiesld officers = chronic;
+chronic payments = 5 months 20 weeks;
+
+SELECTING THE CLIENTS WITH ID
+SELECT clients.*, account.* FROM clients JOIN account ON clients.client_id = account.cleintID_fk WHERE fullname like '%$data%' OR fullname like '$data%'  LIMIT 5
+
+CSOPBM2019
+style='text-transform:uppercase;font-weight:bold;'
+font-weight:bold
+everypayment = 1 week;
+secondpayment = 2 weeks;
+
+deleting payment  = - 1 week;

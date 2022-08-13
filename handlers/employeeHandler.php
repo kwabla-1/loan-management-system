@@ -52,5 +52,19 @@
         }else {
             echo "NOEMPLOYEEWASFOUND";
         }
+    }elseif (isset($_GET['getEmployeeByID'])) {
+        $EMPid = $_GET['getEmployeeByID'];
+        $employeeObject = new Employee($con);
+        $allemployees = $employeeObject->getEmployeeByID($EMPid,$con);
+        if ($allemployees) {
+            echo json_encode($allemployees);
+        }
+    }elseif (isset($_GET['delSpecificEmployee'])) {
+        $EMPid = $_GET['delSpecificEmployee'];
+        $employeeObject = new Employee($con);
+        $allemployees = $employeeObject->deletSpecificEmployee($EMPid,$con);
+        if ($allemployees) {
+            echo ("Employee Deleted Successfully");
+        }
     }
 ?>

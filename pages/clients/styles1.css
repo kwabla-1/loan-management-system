@@ -2,7 +2,8 @@
 .repaymentTable-head,
 .repaymentTable,
 .assessmentTable-head,
-.assessmentTable{
+.assessmentTable,
+.expenseTable{
   width:100%;
   table-layout: fixed;
 }
@@ -16,12 +17,18 @@
   border-radius: 5px;
 }
 
+.button__and__image{
+  display: flex;
+}
+
 
 .table-content{
-  height:55rem;
+  height:42rem;
   overflow-x:auto;
   margin-top: 0px;
   border: 1px solid rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  font-weight: bolder;
 }
 .repaymentTable-head thead tr th{
   padding: 20px 15px;
@@ -45,7 +52,7 @@
     padding: 15px;
     text-align: left;
     vertical-align:middle;
-    font-weight: 300;
+    font-weight: bolder;
     font-size: 12px;
     color: white;
     border-bottom: solid 1px rgba(255,255,255,0.1);
@@ -55,15 +62,25 @@
   padding: 15px;
   text-align: center;
   vertical-align:middle;
-  font-weight: 400;
+  font-weight: bolder;
   font-size: 12px;
   color: rgb(61, 61, 61);;
   border-bottom: solid 1px rgba(0, 0, 0, 0.1);
 }
 
-  
+.expenseTable tbody tr td{
+  vertical-align: middle;
+  padding: 5px;
+  text-align: center;
+  font-size: 12px;
+  color: rgb(61, 61, 61);
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+}
+
+
 .model__container,
-.model__container1{
+.model__container1,
+.model__container2{
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
@@ -79,11 +96,12 @@
 }
 
 .model__container.appear,
-.model__container1.appear{
+.model__container1.appear,
+.model__container2.appear{
   opacity: 1;
   pointer-events: auto;
 }
-  
+
 .modal{
     background-color: white;
     border-radius: 5px;
@@ -109,7 +127,8 @@
 }
 
 .modal h1::after,
-.modal1 h1::after{
+.modal1 h1::after,
+.modal2 h1::after{
   content: " ";
   display: block;
   border-bottom: 2px solid rgb(114, 18, 18);
@@ -118,6 +137,18 @@
   text-align: center;
   margin: 0 auto;
   padding-top: 1rem;
+}
+
+.modal2{
+    background-color: white;
+    border-radius: 5px;
+    text-align: center;
+    width: 28%;
+    height: 84%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
 }
 /* CLOSE MODAL CODE */
 /* The Close Button (x) */
@@ -130,7 +161,7 @@
   font-weight: bold;
 }
 
-.close1 {
+.close1{
   position: fixed;
   right: 557px;
   top: 269px;
@@ -139,10 +170,21 @@
   font-weight: bold;
 }
 
+.close2{
+  position: fixed;
+  right: 583px;
+  top: 72px;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
 .close:hover,
 .close:focus,
 .close1:hover,
-.close1:focus {
+.close1:focus,
+.close2:hover,
+.close2:focus {
   color: red;
   cursor: pointer;
 }
@@ -159,15 +201,51 @@
   padding: 1rem 6rem;
   margin: 1rem;
 }
-  
+
+/* employee display form styles */
+.labelOne{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.labelOne input{
+  padding: 1rem 3rem;
+}
+
+.employeeDisplaycontainer form input[type=submit]{
+  margin: 1rem;
+}
+
+#formErrorContainer__profilepage,
+#formSuccessContainer__profilepage
+{
+  position: absolute;
+  top: 8rem;
+  left: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 3rem 11rem;
+  pointer-events: none;
+  visibility: hidden;
+  width: 80%;
+  height: 80%;
+  background-color: transparent;
+}
+
   /* for custom scrollbar for webkit browser*/
-  
+
   ::-webkit-scrollbar {
       width: 6px;
-  } 
+  }
   ::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.61); 
-  } 
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.61);
+  }
   ::-webkit-scrollbar-thumb {
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.61); 
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.61);
   }
